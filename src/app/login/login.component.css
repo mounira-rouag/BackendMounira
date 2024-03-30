@@ -1,0 +1,73 @@
+.error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  .bordered-form {
+    border: 1px solid #ddd; /* Adjust border thickness, color, and style as needed */
+    padding: 20px; /* Adjust padding if needed */
+    border-radius: 5px; /* Add rounded corners if desired */
+  }
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto; /* Vertical centering */
+  }
+  
+  .logo-container img {
+    max-width: 200px;
+    max-height: 100px;
+    object-fit: cover;
+  }
+  .contact-form {
+    /* Light blue background */
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Added spacing */
+    background-color: #ffffff;
+    width: 49vh;
+    margin: 0 auto;
+  }
+  .contact-form .alert {
+    margin-top: 10px; /* Add space between submit button and alert */
+    transition: all 0.3s ease-in-out; /* Smooth transition for show/hide animation */
+    opacity: 0; /* Initially hide the alert */
+    visibility: hidden; /* Initially hide the alert (optional) */
+  }
+  
+  .contact-form .alert.show {
+    opacity: 1; /* Show the alert with transition */
+    visibility: visible; /* Make the alert visible (optional) */
+    background-color: #ffffff ;
+  }
+  .contact_section {
+    background: rgb(235, 233, 233); /* Set your desired background color */
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+    height: 80%;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: green !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: green !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   /*change color of underline when focused*/
+   background-color: green !important;
+  }

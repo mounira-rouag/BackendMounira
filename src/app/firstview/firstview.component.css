@@ -1,0 +1,14 @@
+
+.carousel-item {
+    height: 85vh; /* 100% viewport height */
+
+  }
+  
+  .carousel-item img {
+    object-fit: cover; /* Stretch image to fill container */
+  }
+ 
+  
+
+  
+  

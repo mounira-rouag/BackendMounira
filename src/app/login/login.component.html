@@ -1,0 +1,38 @@
+<section class="contact_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="contact-form border rounded p-4">
+          <h2 class="text-center mb-4">Please Sign In</h2>
+          <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" class="example-form" novalidate>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Username" name="username" [(ngModel)]="form.username" #username="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && username.errors }" required />
+              <mat-error *ngIf="username.errors && f.submitted">Username is required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput type="password" name="password" [(ngModel)]="form.password" minlength="6" #password="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && password.errors }" placeholder="Password" required />
+                <mat-error *ngIf="password.errors && f.submitted">password is required</mat-error>
+            </mat-form-field>
+            <div class="form-group">
+              <a routerLink="/email-verifiy">Forgot your password?</a>
+             </div>
+          <div class="btn-box">
+              <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+            
+          </form>
+          <br>
+          
+          <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger alert-dismissed fade show" role="alert">
+            login failed: {{ errorMessage }}
+          </div>
+          <div *ngIf="isLoggedIn" class="alert alert-success mt-3" role="alert">
+            Logged in as {{ roles }}.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

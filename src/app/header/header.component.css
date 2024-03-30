@@ -1,0 +1,19 @@
+.bg-black {
+    background-color: black ;
+  }
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto; /* Vertical centering */
+  }
+  
+  .navbar-brand img.logo {
+    height: 45px; /* Adjust height as needed */
+    width: auto; /* Maintain aspect ratio */
+  }
+  .login-icon {
+    color: white;
+    margin-right: 5px;
+  }
+  

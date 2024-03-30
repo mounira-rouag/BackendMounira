@@ -1,0 +1,114 @@
+<section class="contact_section layout_padding">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-4 mx-auto">
+                <div class="contact-form">
+                    <div class="heading_container">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <form #signUpForm="ngForm" (ngSubmit)="signUp(signUpForm.value)" class="example-form" novalidate>
+                        <div class="form-group" [ngStyle]="{backgroundColor:'var(--highlight-bg)'}">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label >Firstname</mat-label>
+                                <input matInput type="text" name="firstname" placeholder="Firstname" ngModel required />
+                                <mat-error *ngIf="signUpForm.controls['firstname'].invalid && signUpForm.controls['firstname'].touched">
+                                    Firstname is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Lastname</mat-label>
+                                <input matInput type="text" name="lastname" placeholder="Lastname" ngModel required />
+                                <mat-error *ngIf="signUpForm.controls['lastname'].invalid && signUpForm.controls['lastname'].touched">
+                                    Lastname is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Username</mat-label>
+                                <input matInput type="text" name="username" placeholder="Username" ngModel required />
+                                <mat-error *ngIf="signUpForm.controls['username'].invalid && signUpForm.controls['username'].touched">
+                                    Username is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="email" name="email" placeholder="Email" ngModel required />
+                                <mat-error *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched">
+                                    Email is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" name="password" minlength="6" placeholder="Password" ngModel required />
+                                <mat-error *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched">
+                                    Password is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Roles</mat-label>
+                                <mat-select name="roles" [(ngModel)]="selectedRoles" multiple required>
+                                    <mat-option value="RS">Rs</mat-option>
+                                    <mat-option value="admin">Admin</mat-option>
+                                    <mat-option value="rc">Rc</mat-option>
+                                    <mat-option value="rc+">Rc+</mat-option>
+                                    <mat-option value="rspouvoir">RsPouvoir</mat-option>
+                                    <mat-option value="quality">quality</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="!selectedRoles">At least one role must be selected</mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="form-group">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Site</mat-label>
+                                <mat-select name="site" [(ngModel)]="site" required>
+                                    <mat-option value="1">Ardia</mat-option>
+                                    <mat-option value="2">Actia Do Brasil</mat-option>
+                                    <mat-option value="3">Actia Nordic</mat-option>
+                                    <mat-option value="4">Actia Automotive</mat-option>
+                                    <mat-option value="5">Actia CZ</mat-option>
+                                    <mat-option value="6">Invertix</mat-option>
+                                    <mat-option value="7">Actia Italia</mat-option>
+                                    <mat-option value="8">Actia China</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="!site">A site must be selected</mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="btn-box">
+                            <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
+                        </div>
+                    </form>
+                    
+                    <br>
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    <div *ngIf="signUpForm.submitted && isSignUpFailed && !loading"
+                        class="alert alert-danger alert-dismissed fade show" role="alert">
+                        Signup failed: {{ errorMessage }}
+
+                    </div>
+                    <div *ngIf="signUpForm.submitted && isSuccessful && !loading" class="alert alert-success " role="alert">
+                        User Added sucessfully
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

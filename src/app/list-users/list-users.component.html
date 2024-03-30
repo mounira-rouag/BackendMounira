@@ -1,0 +1,209 @@
+<section>
+
+    <div class="container">
+
+        <p-table #dt1 [value]="allUsers" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['id' , 'user.username','user.firstname','user.lastname' ,'email','profile']"
+            [tableStyle]="{ 'min-width': '50rem', 'height': '10rem'}" selectionMode="single" [loading]="loading">
+
+            <ng-template pTemplate="caption">
+                <div class="flex">
+
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <div class="flex align-items-center">
+                            Id
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Username
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            firstname
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            lastname
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Profile
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Email
+
+                        </div>
+                    </th>
+
+
+
+                    <th>
+                        <div class="flex align-items-center">
+
+
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-allUsers>
+                <tr>
+                    <td>
+                        {{ allUsers.id }}
+                    </td>
+                    <td>
+                        {{ allUsers.username }}
+                    </td>
+                    <td>
+                        {{ allUsers.firstname }}
+                    </td>
+                    <td>
+                        {{ allUsers.lastname }}
+                    </td>
+                    <td>
+                        {{ allUsers.profile }}
+                    </td>
+                    <td>
+                        {{ allUsers.email}}
+                    </td>
+
+                    <td>
+                        <div>
+                           
+                                <button type="button" class="btn btn-light"  style="background-color: #82c419; color: white;" (click)="showDialog(allUsers)" > <i class="pi pi-pencil" style="font-size: 1rem"></i></button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            </ng-template>
+
+        </p-table>
+        <p-dialog [(visible)]="visible" [style]="{width: '50vw', 'box-shadow': '0px 2px 5px rgba(0, 0, 0, 0.3)'} ">
+            <ng-template pTemplate="content">
+                <!-- Form for updating user -->
+                <h2>Update User</h2>
+                <form #updateUserForm="ngForm" style="width: 100%;" novalidate>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <mat-form-field appearance="fill" class="example-full-width">
+                                    <mat-label>Firstname</mat-label>
+                                    <input matInput type="text" name="firstname" [(ngModel)]="userToUpdate.firstname" placeholder="Firstname" ngModel
+                                        required />
+                                    <mat-error
+                                        *ngIf="updateUserForm.controls['firstname'].invalid && updateUserForm.controls['firstname'].touched">
+                                        Firstname is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <mat-form-field appearance="fill" class="example-full-width">
+                                    <mat-label>Lastname</mat-label>
+                                    <input matInput type="text" [(ngModel)]="userToUpdate.lastname" name="lastname" placeholder="Lastname" ngModel
+                                        required />
+                                    <mat-error
+                                        *ngIf="updateUserForm.controls['lastname'].invalid && updateUserForm.controls['lastname'].touched">
+                                        Lastname is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <mat-form-field appearance="fill" class="example-full-width">
+                                    <mat-label>Username</mat-label>
+                                    <input matInput type="text" name="username" [(ngModel)]="userToUpdate.username" placeholder="Username" ngModel
+                                        required />
+                                    <mat-error
+                                        *ngIf="updateUserForm.controls['username'].invalid && updateUserForm.controls['username'].touched">
+                                        Username is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <mat-form-field appearance="fill" class="example-full-width">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="email" [(ngModel)]="userToUpdate.email" name="email" placeholder="Email" ngModel required />
+                                    <mat-error
+                                        *ngIf="updateUserForm.controls['email'].invalid && updateUserForm.controls['email'].touched">
+                                        Email is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Roles</label>
+                                
+                                <select id="roles" name="userToUpdate.roles[0]" [(ngModel)]="userToUpdate.roles" class="form-control">
+                                    <option value="user">User</option>
+                                    <option value="s">Admin</option>
+                                    <option value="rc">Rc</option>
+                                    <option value="rc+">Rc+</option>
+                                    <option value="rspouvoir">RsPouvoir</option>
+                                </select>
+
+                                
+                                <!-- <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Roles</mat-label>
+                                    <mat-select name="roles" [(ngModel)]="selectedRoles" multiple required>
+                                        <mat-option value="user">User</mat-option>
+                                        <mat-option value="admin">Admin</mat-option>
+                                        <mat-option value="rc">Rc</mat-option>
+                                        <mat-option value="rc+">Rc+</mat-option>
+                                        <mat-option value="rspouvoir">RsPouvoir</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="!selectedRoles">At least one role must be selected</mat-error>
+                                </mat-form-field> -->
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Site</label>
+                                <select name="siteid" [(ngModel)]="userToUpdate.site" id="siteid" class="form-control">
+                                    <option value="1">Ardia</option>
+                                    <option value="2">Actia Do Brasil</option>
+                                    <option value="3">Actia Nordic</option>
+                                    <option value="4">Actia Automotive</option>
+                                    <option value="5">Actia CZ</option>
+                                    <option value="6">Invertix</option>
+                                    <option value="7">Actia Italia</option>
+                                    <option value="8">Actia China</option>
+                                </select>
+                          
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit"  (click)="editUser()" style="background-color: #82c419; color: white;" [disabled]="!updateUserForm.valid">Update
+                            User</button>
+                    </div>
+                   
+                </form>
+
+            </ng-template>
+        </p-dialog>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+<section class="contact_section layout_padding">
+<div class="conatiner">
+  <form>
+    <div class="inner-form">
+      <div class="container">
+      <h1>Profile {{ currentUser.username}}</h1>
+        <div class="user-info">
+          <p><strong>Username:</strong> {{ currentUser.username }}</p>
+          <p><strong>Email:</strong> {{ currentUser.email }}</p>
+         
+          <p><strong>Roles:</strong></p>
+          
+          <ul>
+            <li *ngFor="let role of currentUser.roles">{{ role }}</li>
+          </ul>
+         
+        </div>
+      </div>
+     
+    </div>
+  </form> 
+</div>
+</section>

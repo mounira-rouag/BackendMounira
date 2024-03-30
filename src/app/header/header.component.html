@@ -1,0 +1,102 @@
+
+<header class="header_section">
+  <div class="contact_nav_container">
+    <div class="container">
+      <div class="contact_nav">
+       
+        <a href="" style="text-decoration: none;">
+          
+          
+          <h5>Base Ecu</h5> 
+          
+        </a>
+        <a href="">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          <span>
+            Phone Call:+2167458157
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+ 
+</header>
+
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">
+      <img src="assets/images/ACTIA_NEGATIF_RVB.png" alt="Logo" class="logo">
+    </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown" *ngIf="isLoggedIn && !showAdminBoard">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dev Manegment
+         </a>
+        <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+            <li><a class="dropdown-item" routerLink="/gestion-dev">Creat/Consult</a></li>
+            
+            <!-- Add more dropdown items as needed -->
+        </ul>
+        <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+          <li><a class="dropdown-item" routerLink="/gestion-dev">Importer</a></li>
+          
+          <!-- Add more dropdown items as needed -->
+      </ul>
+    </li>
+      
+      <li class="nav-item dropdown" *ngIf="isLoggedIn && showAdminBoard">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dev Manegment
+         </a>
+        <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+            <li><a class="dropdown-item" routerLink="/gestion-dev">Dev Search</a></li>
+            <li><a class="dropdown-item" routerLink="/ownlist">Creat Dev</a></li>
+            <!-- Add more dropdown items as needed -->
+        </ul>
+    </li>
+    <li class="nav-item dropdown" *ngIf="isLoggedIn && showAdminBoard">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        User Manegment
+       </a>
+      <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+          <li><a class="dropdown-item" routerLink="/signup">Add User</a></li>
+          <li><a class="dropdown-item" routerLink="/users-list">List of Users</a></li>
+          <!-- Add more dropdown items as needed -->
+      </ul>
+  </li>
+     
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      
+      <li class="nav-item" *ngIf="!isLoggedIn">
+       
+        <a href="/login" class="nav-link" routerLink="login">Login
+          <i class="fa fa-user login-icon" aria-hidden="false"></i>
+        </a>
+
+        
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="isLoggedIn ">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         {{username}} {{roles}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/profil">Profile</a>
+          <a class="dropdown-item" href="/change-password">Change Password</a>
+          <a class="dropdown-item" href="/logout" (click)="signOut() " routerLink="login">Logout</a>
+        </div>
+      </li>
+
+      
+    </ul>
+    
+  </nav>
+
+  <div class="container">
+    </div>
+</div>
+
+

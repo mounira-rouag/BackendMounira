@@ -1,0 +1,46 @@
+<section class="contact_section layout_padding">
+  <div class="container">
+      <div class="row justify-content-center"> <!-- Center the content -->
+          <div class="col-md-6"> <!-- Reduce the width of the column -->
+              <div class="contact-form border" style="padding: 20px; border-radius: 5px;">
+                  <div class="heading_container">
+                      <h2>Change Password</h2>
+                  </div>
+                  <form #verifiyemail="ngForm" (ngSubmit)="verifyEmail(verifiyemail.value.email)" class="example-form">
+                      <div class="form-group">
+                          <mat-form-field appearance="fill" class="example-full-width">
+                              <mat-label>Email</mat-label>
+                              <input matInput type="email" placeholder="Enter Email" ngModel name="email" required />
+                              <mat-error *ngIf="verifiyemail.controls['email'].invalid && verifiyemail.controls['email'].touched">
+                                  Email is required
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                      <div class="btn-box">
+                          <button type="submit" [disabled]="!verifiyemail.valid">Submit</button>
+                      </div>
+                  </form>
+
+                  <br>
+                  <br>
+
+                  <div *ngIf="loading" class="d-flex justify-content-center">
+                      <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                      </div>
+                  </div>
+                  <div *ngIf="errorMessage && isFailed" class="alert alert-danger alert-dismissed fade show" role="alert">
+                      Failed: {{ errorMessage }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <div *ngIf="!errorMessage && isFailed" class="alert alert-warning " role="alert">
+                      an email was sent to the given address check your box
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+  
