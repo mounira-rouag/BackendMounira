@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit{
   
  
   showAdminBoard = this.roles.includes('ROLE_ADMIN')
+  showRSPouvoirBoard: boolean=false;
+  showRSBoard: boolean=false;
   
   constructor( private userService: UserServiceService,private tokenStorageService: StorageService) { }
 
@@ -34,7 +36,8 @@ export class HeaderComponent implements OnInit{
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_RC');
-
+      this.showRSBoard = this.roles.includes('ROLE_RS');
+      this.showRSPouvoirBoard = this.roles.includes('ROLE_RSPOUVOIR');
       this.username = user.username;
      
     }

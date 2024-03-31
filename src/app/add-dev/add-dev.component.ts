@@ -18,6 +18,7 @@ import { CDC } from '../Models/cdc.model';
 import { MessageService } from 'primeng/api';
 import { FonctionService } from '../Services/fonctions-service.service';
 import { Validation } from '../Models/validation.model';
+import { StorageService } from '../Services/storage.service';
 
 @Component({
   selector: 'app-add-dev',
@@ -32,7 +33,7 @@ export class AddDevComponent {
   visible: boolean | undefined;
   visible1: boolean | undefined
   visible2: boolean | undefined
-  majs: Maj[] = [];
+  majs:any;
   selectedmaj: any;
   allUsers: any;
   Vehicules!: Vehicule[];
@@ -46,61 +47,19 @@ export class AddDevComponent {
   myDev:any
   validations: any;
   cdc!:CDC[];
+  cdc1!:CDC;
+  dev1!:Dev;
  fonctions:any;
+ showRSBoard = false;
+  showRSPouvoirBoard = false;
+  showAdminBoard: any;
+  user: any;
+  private roles: string[] = [];
+  isModificationAllowed=false;
   toggleBackground() {
     this.background = this.background ? undefined : 'primary';
   }
-  form = {
-    devname: '',
-   version:'',
-    dll: '',
-    site: 0,
-    developer: 0,
-    typeDev: '',
-    history: '',
-    devComment: '',
-    bug: '',
-    cdc : {
-      nomCdc : '',
-
-      refCdc: '',
-      indCdc: '',
-      creation: Date, 
-      signatureOk: '',
-      refCdcArdia: '',
-      reverse:{
-        nomReverse:'',
-        numDico:0,
-        profil:'',
-        geo:''
-      }
-
-    },
-    vehicules:{
-
-    },
-    user:{
-      firstname: '',
-      lastname: '',
-      username: 'hello',
-      email: '',
-      password: '',
-      site:{
-        idSite:0,
-        NomSite:''
-
-      }
-    },
-    maj:{
-      nomMaj: '',
-    typeMaj: '' ,  // Allow null for optional typeMaj
-    statusMaj: '' ,  // Allow null for optional statusMaj
-    ordre: '',
-    enCours: ''  ,   // Allow null for optional enCours
-    atalMaj: ''  ,   // Allow null for optional atalMaj
-    nomMajOffice: ''  
-    }
-  };
+  
   selectProduct(cdc: CDC) {
     this.messageService.add({ severity: 'info', summary: 'cdc Selected', detail: cdc.nomCdc });
     console.log("hneeeee")
@@ -128,32 +87,53 @@ export class AddDevComponent {
     private messageService: MessageService,
     private fonctionService: FonctionService,
     private validationService: ValidationService,
-    private cdcService: CDCService) {
+    private cdcService: CDCService,
+    private storageService: StorageService
+   ) {
 
   }
 
   ngOnInit(): void {
 
     this.getDevByID()
+    this.getValidationByDev();
+   
     this.getAllVersion();
     this.getAllUser();
     this.getAllVehicule();
     this.getAllCdc();
     this.getAllReverse();
-    this.getAllSite();
-    this.getFonctionByCdc();
-    this.getValidationByDev();
-   
-    this.targetProducts=this.Vehicules;
-    console.log("vehicules de la dev",this.targetProducts)
-    
+    this.getAllSite(); 
+    this.getCdcByDev();
+   // this.getFonctionByCdc();
+   this.user = this.storageService.getUser();
+   this.role = this.user.roles;
+   //this.isModificationAllowed = this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_RS') || this.roles.includes('ROLE_RSPOUVOIR');
+  
+
+   console.log("allowed",this.isModificationAllowed);
+ 
+  }
+
+  getCdcByDev(){
+    this.cdcService.getCdcByDev(this.idDev).subscribe(res=>{
+      this.cdc1=res
+    this.fonctions=this.cdc1.fonctions;
+    console.log(this.fonctions)
+  })
   }
 getAllCdc(){
   this.cdcService.getAllCdc().subscribe(res=>{
       this.cdc=res
   })
 }
-
+getFonctionByCdc(){
+  console.log("before",this.fonctions)
+  this.fonctionService.getFonctionByCdc(this.cdc1.idCdc).subscribe(res=>{
+    this.fonctions=res;
+    console.log("fonctions",this.fonctions)
+  })
+}
 
   getValidationByDev(){
     this.validationService.getValidationByDev(this.idDev).subscribe(res=>{
@@ -164,20 +144,15 @@ getAllCdc(){
     this.devService.getDevsById(this.idDev).subscribe(res=>{
       this.myDev = res
       this.dev = this.myDev
-      console.log('-----hene------',this.dev)
+      console.log('-----mydev------',this.dev)
     })
   }
-  getFonctionByCdc(){
-    console.log("fonctions",this.fonctions)
-    this.fonctionService.getFonctionByCdc(this.dev.cdc.idCdc).subscribe(res=>{
-      this.fonctions=res;
-      console.log("fonctions",this.fonctions)
-    })
-  }
+  
 getVehiculeByDev(){
   this.vehiculeService.getVehichulesByDev(this.dev.id).subscribe(
     (data: Vehicule[]) => {
       this.Vehicules = data;
+      this.targetProducts = data
     },
     (error: any) => {
       console.log("error", error);
@@ -186,10 +161,12 @@ getVehiculeByDev(){
 }
 
 
+
   getAllVersion() {
     this.versionService.getAllversions().subscribe(
-      (data1: Maj[]) => {
+      (data1: any) => {
         this.majs = data1;
+        console.log("version " , this.majs)
       },
       (error: any) => {
         console.log("error", error);
@@ -199,7 +176,6 @@ getVehiculeByDev(){
   getAllUser() {
     this.userService.getAllUsers().subscribe(res => {
       this.allUsers = res
-      console.log(this.allUsers, "allusers");
 
     })
   }
@@ -208,8 +184,7 @@ getVehiculeByDev(){
     this.vehiculeService.getAllVehicules().subscribe(
       (data5: Vehicule[]) => {
         this.sourceProducts = data5;
-        console.log(this.sourceProducts, "vehicules ksit");
-
+        this.getVehiculeByDev()
         this.cdr.markForCheck();
       },
       (error: any) => {
@@ -221,7 +196,6 @@ getVehiculeByDev(){
     this.siteService.getAllsites().subscribe(
       (data2: Site[]) => {
         this.sites = data2;
-        console.log(this.sites)
       },
       (error: any) => {
         console.log("error", error);
@@ -240,9 +214,11 @@ getVehiculeByDev(){
 
   }
   onSubmit() {
-
-    this.devService.registerDev(this.form)
+console.log("submition",this.dev)
+this.dev.vehicules=this.targetProducts
+    this.devService.updateDev(this.idDev,this.dev)
       .subscribe(response => {
+        this.cdr.detectChanges();
         // Handle successful response (optional)
         console.log('Form data submitted successfully:', response);
       }, error => {

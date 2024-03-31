@@ -87,7 +87,7 @@
        
         <div class="col">
           <div class="p-3">
-            <button class="btn-search" *ngIf="showAdminBoard " routerLink="/add-dev">
+            <button class="btn-search" *ngIf="showAdminBoard || showRSBoard || showRSPouvoirBoard" routerLink="/add-dev">
                
               <i class="pi pi-plus" > </i> Add
           
@@ -96,8 +96,17 @@
           </div>
         </div>
         <div class="col">
+          
+         
           <div class="p-3">
-            <button class="btn-search" data-bs-toggle="collapse" (click)="exportToExcel()"  >Export to excel list</button>
+            <button class="btn-search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Export to excel list</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#" (click)="exportToExcel()">personal export </a>
+              <a class="dropdown-item" href="#">General export </a>
+              
+             
+              
+            </div>
           </div>
         </div>
        
@@ -190,7 +199,7 @@
         <th >
           <div class="flex align-items-center">
             Jira
-            <p-columnFilter type="text" field="Jira" ></p-columnFilter>
+            <p-columnFilter type="text" field="jira" ></p-columnFilter>
           </div>
         </th>
         <th >
@@ -245,9 +254,7 @@
         <td>
           {{ alldev?.user?.username }}
         </td>
-        <td>
-        <a href="/[IB6212MUL-2296] [MD] POM- SGW Renault - Evolution de la génération menu - Jira (actia.se)"></a>
-        </td>
+          <a [href]="alldev.Jira" target="_blank">{{alldev.jira}}</a>
         <td>
           <button type="button" class="btn btn-light" (click)="showDialog(alldev.id)"><i  class="pi pi-car" style="font-size: 1rem"></i></button>
           

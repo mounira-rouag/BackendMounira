@@ -79,6 +79,7 @@ import { ListboxModule } from 'primeng/listbox';
     BrowserAnimationsModule, // Add BrowserAnimationsModule to imports
     MatSnackBarModule,
     DialogModule,
+    FormsModule,
     ButtonModule,
     MatButtonModule,
     MatIconModule,

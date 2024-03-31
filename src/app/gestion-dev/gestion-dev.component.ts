@@ -21,6 +21,7 @@ import { versionService } from '../Services/version-service.service';
 import { SiteService } from '../Services/sites-service.service';
 import { MenuItem } from 'primeng/api';
 import * as XLSX from 'xlsx';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-gestion-dev',
   templateUrl: './gestion-dev.component.html',
@@ -87,6 +88,7 @@ export class GestionDevComponent implements OnInit {
     private marqueService: MarqueService,
     private siteService: SiteService,
     private majService: MajService,
+    private sanitizer: DomSanitizer,
   ) { 
     
   }
@@ -184,7 +186,9 @@ export class GestionDevComponent implements OnInit {
   }
 
 
-
+  getSafeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
   /**getAllVehicule() {
     this.vehiculeService.getAllVehicules().subscribe(
       (data5: Vehicule[]) => {

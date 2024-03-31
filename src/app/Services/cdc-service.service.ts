@@ -17,5 +17,7 @@ const httpOptions = {
     getAllCdc(): Observable<any> {
         return this.http.get<any>(`${environment.apiUrl}/cdc/all`, { responseType: 'json' });
       }
-     
+      getCdcByDev(devid: number): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/cdc/by-dev/${devid}`, { responseType: 'json' });
+      }
   }

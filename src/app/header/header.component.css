@@ -7,10 +7,13 @@
     align-items: center;
     margin: 0 auto; /* Vertical centering */
   }
-  
+   h3{
+    margin-left: 20px;
+  }
   .navbar-brand img.logo {
     height: 45px; /* Adjust height as needed */
-    width: auto; /* Maintain aspect ratio */
+    width: auto; 
+    margin-left: 20px;
   }
   .login-icon {
     color: white;

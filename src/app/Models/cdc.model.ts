@@ -1,4 +1,5 @@
 import { Dev } from "./dev.model";
+import { Fonction } from "./fonction.model";
 import { Reverse } from "./reverse.model";
 
 export interface CDC {
@@ -11,4 +12,5 @@ export interface CDC {
     refCdcArdia: string;
     dev: Dev[]; 
     reverse: Reverse; 
+    fonctions:Fonction[];
   }

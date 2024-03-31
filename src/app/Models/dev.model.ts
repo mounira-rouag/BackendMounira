@@ -20,6 +20,7 @@ export interface Dev {
     family:String;
     ecuName:String;
     etatdev:EtatDev;
+    Jira:string;
     cdc :CDC;
     ecu:Ecu;
     user:User;

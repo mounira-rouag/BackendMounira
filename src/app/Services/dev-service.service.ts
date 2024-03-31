@@ -129,4 +129,7 @@ const httpOptions = {
       // Assuming originalDev contains the data of the original row
       return this.http.post<Dev>(`${environment.apiUrl}/dev/add`, originalDev);
     }
+    updateDev(id: number, updatedDev: Dev): Observable<Dev> {
+      return this.http.put<Dev>(`${environment.apiUrl}/update/${id}`, updatedDev);
+    }
   }

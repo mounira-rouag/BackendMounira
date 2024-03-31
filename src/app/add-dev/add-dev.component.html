@@ -2,8 +2,8 @@
     <mat-tab label="Developpment">
         <div class="row">
             <div class="col">
-                <form #updateUserForm="ngForm" (ngSubmit)="onSubmit()" style="max-width: 600px; margin: 12px 12px;"
-                    novalidate [ngStyle]="{backgroundColor: 'var(--highlight-bg)'}">
+                <form (ngSubmit)="onSubmit()"  style="max-width: 600px; margin: 12px 12px;" novalidate
+                    [ngStyle]="{backgroundColor: 'var(--highlight-bg)'}" >
                     <div class="row g-3">
                         <div class="col">
                             <mat-form-field appearance="fill" class="example-full-width">
@@ -14,13 +14,15 @@
                         </div>
 
                         <div class="col">
-                            <mat-form-field appearance="fill" class="example-full-width">
+                            <mat-form-field appearance="fill" class="example-full-width" >
                                 <mat-label>Version</mat-label>
-                                <mat-select name="dev.maj.nomMaj" [(ngModel)]="dev.maj.nomMaj" id="">
-                                    <mat-option placeholder="" value="">{{dev.maj.nomMaj}}</mat-option>
+                                <mat-select name="nomMajj" [(ngModel)]="dev.maj.idMaj" id="" [disabled]="!isModificationAllowed">
+
                                     <mat-option *ngFor="let maj of majs" [value]="maj.idMaj">{{maj.nomMaj}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
+
+
                         </div>
 
                     </div>
@@ -48,8 +50,7 @@
                         <div class="col">
                             <mat-form-field appearance="fill" class="example-full-width">
                                 <mat-label>Developer</mat-label>
-                                <mat-select name="dev.user.username" [(ngModel)]="dev.user.username"
-                                    id="dev.user.username">
+                                <mat-select name="username" [(ngModel)]="dev.user.id" id="username">
 
                                     <mat-option *ngFor="let User of allUsers"
                                         [value]="User.id">{{User.username}}</mat-option>
@@ -68,7 +69,7 @@
                         <div class="col">
                             <mat-form-field appearance="fill" class="example-full-width">
                                 <mat-label>History</mat-label>
-                                <textarea matInput id="history" name="history" [(ngModel)]="form.history"
+                                <textarea matInput id="history" name="history" [(ngModel)]="dev.devComment"
                                     required></textarea>
                             </mat-form-field>
                         </div>
@@ -80,7 +81,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="row g-3">
                         <mat-form-field appearance="fill" class="example-full-width">
                             <mat-label>bug</mat-label>
                             <textarea matInput id="numbeg" name="numbeg" [(ngModel)]="dev.numBug" required></textarea>
@@ -90,41 +91,47 @@
                     <div class="button-container">
 
 
-                        <button type="button" class="btn btn-secondary">Update</button>
-                        
-        
+                        <button type="button" (click)="onSubmit()" class="btn btn-secondary">Update</button>
+
+
                     </div>
                 </form>
             </div>
             <div class="col">
-                <div class="col">
-                         <p>Fonctions</p>
-                         
-                        <p-listbox [options]="fonctions"  optionLabel="name" [listStyle]="{ 'max-height': '1000px' }" [style]="{ width: '15rem' }" [listStyle]="{'max-height': '1000px'}">
-                            <ng-template let-fonction pTemplate="item">
-                                <div class="flex align-items-center gap-2">
-                                    
-                                    <div>{{ fonction.NomFonction }}</div>
-                                </div>
-                            </ng-template>
-                        </p-listbox>
-                   
-                </div>
-                <div class="col">
-                    <p>Fonctions List</p>
-               
-                   <p-listbox [options]="validations"  optionLabel="name" [listStyle]="{ 'max-height': '1000px' }" [style]="{ width: '15rem' }" [listStyle]="{'max-height': '1000px'}">
-                       <ng-template let-validation pTemplate="item">
-                           <div class="flex align-items-center gap-2">
-                               
-                               <div>{{ validation.typeValid }} {{validation.etatValid}} {{validation.dateValid}}</div>
-                           </div>
-                       </ng-template>
-                   </p-listbox>
+                <div class="col-md-8">
+                    <p>Fonctions</p>
 
-                 
-              
-           </div>
+                    <p-scroller [items]="fonctions" [itemSize]="70" styleClass="border-100"
+                        [style]="{'width': '400px', 'height': '150px','backgroundColor':' rgb(235, 233, 233)'}">
+                        <ng-template pTemplate="item" let-fonction>
+                            <div class="flex align-items-center p-2" style="height: 50px;">{{ fonction.descrAnglais }}
+                            </div>
+                        </ng-template>
+                    </p-scroller>
+                    <br>
+                    <div class="button-container">
+                        <button type="button" class="btn btn-secondary">select Fonctions</button>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <p>Validation List</p>
+                    <p-scroller [items]="validations" [itemSize]="70" styleClass="border-1 surface-border"
+                        [style]="{'width': '400px', 'height': '150px','backgroundColor':' rgb(235, 233, 233)'}">
+                        <ng-template pTemplate="item" let-validation>
+                            <div class="flex align-items-center p-2" style="height: 50px;">{{ validation.typeValid }}
+                                {{validation.etatValid}} {{validation.dateValid}}</div>
+                        </ng-template>
+                    </p-scroller>
+                    <br>
+                    <div class="button-container">
+                        <button type="button" class="btn btn-secondary">select Validations</button>
+
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -136,21 +143,21 @@
             [sourceStyle]="{width:'5rm' ,height: '20rem' }" [targetStyle]="{width:'5rm', height: '20rem' }"
             filterBy="nomVeh" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name"
             breakpoint="1400px" class="custom-picklist">
-            <ng-template let-Vehicule pTemplate="item">
+            <ng-template let-targetProducts pTemplate="item">
                 <div class="flex flex-wrap p-2 align-items-center gap-3">
 
                     <div class="flex-1 flex flex-column gap-2">
-                        <span class="font-bold">{{ Vehicule?.nomVeh }}</span>
+                        <span class="font-bold">{{ targetProducts?.nomVeh }}</span>
 
                     </div>
                     <div class="flex-1 flex flex-column gap-2">
-                        <span class="font-bold">{{ Vehicule?.marque?.nomMarque }}</span>
+                        <span class="font-bold">{{ targetProducts?.marque?.nomMarque }}</span>
 
                     </div>
 
                 </div>
             </ng-template>
-            
+
         </p-pickList>
 
 
@@ -197,7 +204,7 @@
 
                 <mat-form-field>
                     <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="dev.cdc.creation">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dev.cdc.creation" name="creationDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -219,9 +226,8 @@
                 <div class="col">
                     <mat-form-field appearance="fill" class="example-full-width">
                         <mat-label> Data Source</mat-label>
-                        <mat-select name="dev.cdc.reverse.nomReverse" [(ngModel)]="dev.cdc.reverse.nomReverse"
-                            id="dev.cdc.reverse.nomReverse">
-                            <mat-option placeholder="" value="cdc.reverse.nomReverse">datasource</mat-option>
+                        <mat-select name="rverse.nomReverse" [(ngModel)]="dev.cdc.reverse.nomReverse" id="nomReverse">
+
                             <mat-option *ngFor="let reverse of reverses"
                                 [value]="reverse.idReverse">{{reverse.nomReverse }}</mat-option>
                         </mat-select>
@@ -233,7 +239,7 @@
             <div class="button-container">
 
 
-                <button type="button" class="btn btn-secondary">Update</button>
+
                 <button type="button" (click)="showDialog()" class="btn btn-secondary">Select Cdc</button>
                 <button type="button" class="btn btn-secondary">Validate</button>
 
@@ -269,7 +275,7 @@
             <div class="button-container">
                 <button type="button" class="btn btn-secondary">Generate Menu</button>
                 <button type="button" class="btn btn-secondary">Generate XML </button>
-                <button type="button" class="btn btn-secondary">Update </button>
+
 
             </div>
 
@@ -278,89 +284,15 @@
 
     </mat-tab>
     <mat-tab label="Adaptateur">
-        <form #updateUserForm="ngForm" (ngSubmit)="onSubmit()"
-            style="max-width: 600px; margin-left: 500px ;margin-top: 50px;" novalidate>
-            <div class="row g-3">
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>Name</mat-label>
-                        <input matInput type="text" id="nomCdc" [(ngModel)]="form.cdc.nomCdc" name="nomCdc" required>
-                    </mat-form-field>
-                </div>
 
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>Reference Ardia </mat-label>
-                        <input matInput type="text" id="refCdcArdia" [(ngModel)]="form.cdc.refCdcArdia"
-                            name="refCdcArdia" required>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>References Actia</mat-label>
-                        <input matInput type="text" id="refCdc" [(ngModel)]="form.cdc.refCdc" name="refCdc" required>
-                    </mat-form-field>
-                </div>
-
-            </div>
-
-            <div class="row g-3">
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>Indice</mat-label>
-                        <input matInput type="text" id="indCdc" [(ngModel)]="form.cdc.indCdc" name="indCdc" required>
-                    </mat-form-field>
-                </div>
-
-                <mat-form-field>
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-
-            </div>
-
-            <div class="row g-3">
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label>Site</mat-label>
-                        <mat-select name="NomSite" [(ngModel)]="form.user" id="NomSite">
-                            <mat-option placeholder="" value="">site</mat-option>
-                            <mat-option *ngFor="let site of sites" [value]="site.idSite">{{site.nomSite }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                        <mat-label> Data Source</mat-label>
-                        <mat-select name="NomSite" [(ngModel)]="form.user" id="NomSite">
-                            <mat-option placeholder="" value="">Developer</mat-option>
-                            <mat-option *ngFor="let reverse of reverses"
-                                [value]="reverse.idReverse">{{reverse.nomReverse }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-            </div>
-
-
-
-
-        </form>
 
     </mat-tab>
 </mat-tab-group>
 
 
 
-<p-dialog header="Select Cdc" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body" [(visible)]="visible"
-    [style]="{width: '75vw'}" [contentStyle]="{height: '300px'}">
+<p-dialog header="Select Cdc" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+    [(visible)]="visible" [style]="{width: '75vw'}" [contentStyle]="{height: '300px'}">
     <p-table [value]="cdc" [scrollable]="true" scrollHeight="flex" [tableStyle]="{'min-width': '50rem'}">
 
         <ng-template pTemplate="header">
@@ -390,97 +322,5 @@
     <ng-template pTemplate="footer">
         <button type="button" pButton pRipple icon="pi pi-times" (click)="visible=false" label="Dismiss"
             class="p-button-text"></button>
-    </ng-template>
-</p-dialog>
-<p-dialog [(visible)]="visible1" [style]="{width: '50vw', 'box-shadow': '0px 2px 5px rgba(0, 0, 0, 0.3)'} ">
-    <ng-template pTemplate="content">
-        <form #updateUserForm="ngForm" (ngSubmit)="onSubmit()" style="width: 100%;" novalidate>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="devName" [(ngModel)]="form.devname" name="devName"
-                            required>
-                        <label for="devName">Dev Name</label>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <select data-trigger="" id="idmaj" [(ngModel)]="form.version" name="choices-single-defaul2"
-                            class="form-select">
-                            <option placeholder="" value="">Version</option>
-                            <option *ngFor="let maj of majs" [value]="maj.idMaj">{{maj.nomMaj}}</option>
-                        </select>
-                        <label for="version">Version</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" [(ngModel)]="form.dll" id="dll" name="dll" required>
-                        <label for="dll">Dll</label>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <select data-trigger="" name="choices-single-defaul4" [(ngModel)]="form.site"
-                            class="form-select">
-                            <option placeholder="" value="">Site</option>
-                            <option *ngFor="let site of sites" [value]="site.idSite">{{site.nomSite }}</option>
-                        </select>
-                        <label for="site">Site</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row g-3">
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <select data-trigger="" name="choices-single-defaul6" [(ngModel)]="form.developer"
-                            class="form-select">
-                            <option placeholder="" value="">model</option>
-                            <option *ngFor="let User of allUsers" [value]="User.id">{{User.username}}</option>
-                        </select>
-                        <label for="developer">Developer</label>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="typeDev" [(ngModel)]="form.typeDev" name="typeDev"
-                            required>
-                        <label for="typeDev">Type Dev</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="history" name="history" [(ngModel)]="form.history"
-                            required></textarea>
-                        <label for="history">History</label>
-
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="comment" name="comment" [(ngModel)]="form.devComment"
-                            required></textarea>
-                        <label for="comment">Comment</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="bug" name="bug" [(ngModel)]="form.bug" required>
-                <label for="bug">Bug</label>
-            </div>
-            <div class="btn-box">
-                <button type="submit" disabled class="btn btn-success">Validate</button>
-            </div>
-        </form>
     </ng-template>
 </p-dialog>

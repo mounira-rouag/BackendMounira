@@ -71,4 +71,8 @@ input[type="submit"]:hover {
     width: 100%;
   }
 
- 
+  :host ::ng-deep {
+    .p-scroller-viewport {
+        flex: none;
+    }
+}
